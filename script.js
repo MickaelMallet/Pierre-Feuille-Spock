@@ -28,7 +28,9 @@ const choices = {
   spock: { name: 'Spock', defeats: ['scissors', 'rock'] },
 };
 
-// Reset all 'selected icons
+let computerChoice = '';
+
+// Reset des icones selectionnées
 
 function resetSelected() {
   allGameIcons.forEach((icon) => {
@@ -36,11 +38,64 @@ function resetSelected() {
   });
 }
 
-// Passing player selection value and styling icons
+
+// Random choice de l'ordinateur
+
+function computerRandomChoice() {
+  const computerChoiceNumber = Math.random();
+  if (computerChoiceNumber < 0.2) {
+    computerChoice = 'rock';
+  } else if (computerChoiceNumber <= 0.4) {
+    computerChoice = 'paper';
+  } else if (computerChoiceNumber <= 0.6) {
+    computerChoice = 'scissors';
+  } else if (computerChoiceNumber <= 0.8) {
+    computerChoice = 'lizard';
+  } else {
+    computerChoice = 'spock';
+  }
+}
+
+// Ajout 'seleted' style et computerChoice
+function displayComputerChoice() {
+  switch (computerChoice) {
+    case 'rock' : 
+    computerRock.classList.add('selected');
+    computerChoiceEl.textContent = ' --- Rock';
+    break;
+    case 'paper' : 
+    computerPaper.classList.add('selected');
+    computerChoiceEl.textContent = ' --- Paper';
+    break;
+    case 'scissors' : 
+    computerScissors.classList.add('selected');
+    computerChoiceEl.textContent = ' --- Scissors';
+    break;
+    case 'lizard' : 
+    computerLizard.classList.add('selected');
+    computerChoiceEl.textContent = ' --- Lizard';
+    break;
+    case 'spock' : 
+    computerSpock.classList.add('selected');
+    computerChoiceEl.textContent = ' --- Spock';
+    break;
+    default: 
+    break;
+  }
+}
+
+// fonction pour effectuer un tour de jeu
+function checkResult() {
+  resetSelected();
+  computerRandomChoice();
+  displayComputerChoice();
+}
+
+// Passage des valeurs et styles selectionnés par le joueur
 
 function select(playerChoice) {
-  resetSelected();
-  //Add selected styling &player choice 
+  checkResult();
+  //Ajout de la classe selected pour mettre en surbrillance l'icone selectionnée
   switch (playerChoice) {
     case 'rock' : 
     playerRock.classList.add('selected');
