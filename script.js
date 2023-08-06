@@ -3,19 +3,16 @@ const playerChoiceEl = document.getElementById('playerChoice');
 const computerScoreEl = document.getElementById('computerScore');
 const computerChoiceEl = document.getElementById('computerChoice');
 const resultText = document.getElementById('resultText'); 
-
 const playerRock = document.getElementById('playerRock');
 const playerPaper = document.getElementById('playerPaper'); 
 const playerScissors = document.getElementById('playerScissors'); 
 const playerLizard = document.getElementById('playerLizard'); 
 const playerSpock = document.getElementById('playerSpock'); 
-
 const computerRock = document.getElementById('computerRock');
 const computerPaper = document.getElementById('computerPaper'); 
 const computerScissors = document.getElementById('computerScissors'); 
 const computerLizard = document.getElementById('computerLizard'); 
 const computerSpock = document.getElementById('computerSpock'); 
-
 const allGameIcons = document.querySelectorAll('.far');
 
 
@@ -28,19 +25,18 @@ const choices = {
   spock: { name: 'Spock', defeats: ['scissors', 'rock'] },
 };
 
+let playerScoreNumber = 0;
+let computerScoreNumber = 0;
 let computerChoice = '';
 
 // Reset des icones selectionnées
-
 function resetSelected() {
   allGameIcons.forEach((icon) => {
     icon.classList.remove('selected');
   });
 }
 
-
 // Random choice de l'ordinateur
-
 function computerRandomChoice() {
   const computerChoiceNumber = Math.random();
   if (computerChoiceNumber < 0.2) {
@@ -83,18 +79,37 @@ function displayComputerChoice() {
     break;
   }
 }
+//check result, increase scores, update resultText
+function updateScore(playerChoice) {
+console.log(playerChoice, computerChoice);
+if (playerChoice === computerChoice) {
+  resultText.textContent = "Egalité";
+}else {
+  const choice = choices[playerChoice];
+  console.log(choice.defeats.indexOf(computerChoice));
+  if (choice.defeats.indexOf(computerChoice) > -1) {
+    resultText.textContent = "Victoire !";
+    playerScoreNumber++;
+    playerScoreEl.textContent = playerScoreNumber;
+  }else {
+    resultText.textContent = 'Défaite ! ';
+    computerScoreNumber++;
+    computerScoreEl.textContent = computerScoreNumber;
+  }
+}
+}
 
 // fonction pour effectuer un tour de jeu
-function checkResult() {
+function checkResult(playerChoice) {
   resetSelected();
   computerRandomChoice();
   displayComputerChoice();
+  updateScore(playerChoice);
 }
 
 // Passage des valeurs et styles selectionnés par le joueur
-
 function select(playerChoice) {
-  checkResult();
+  checkResult(playerChoice);
   //Ajout de la classe selected pour mettre en surbrillance l'icone selectionnée
   switch (playerChoice) {
     case 'rock' : 
@@ -121,4 +136,5 @@ function select(playerChoice) {
     break;
   }
 }
+
 
