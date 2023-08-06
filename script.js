@@ -36,6 +36,18 @@ function resetSelected() {
   });
 }
 
+// Reset des scores et choix
+function resetAll() {
+  playerScoreNumber =0;
+  computerScoreNumber =0;
+  playerScoreEl.textContent = playerScoreNumber;
+  computerScoreEl.textContent = computerScoreNumber;
+  playerChoiceEl.textContent = '';
+  computerChoiceEl.textContent = '';
+  resultText.textContent = '';
+  resetSelected();
+}
+
 // Random choice de l'ordinateur
 function computerRandomChoice() {
   const computerChoiceNumber = Math.random();
@@ -81,12 +93,10 @@ function displayComputerChoice() {
 }
 //check result, increase scores, update resultText
 function updateScore(playerChoice) {
-console.log(playerChoice, computerChoice);
 if (playerChoice === computerChoice) {
   resultText.textContent = "Egalité";
 }else {
   const choice = choices[playerChoice];
-  console.log(choice.defeats.indexOf(computerChoice));
   if (choice.defeats.indexOf(computerChoice) > -1) {
     resultText.textContent = "Victoire !";
     playerScoreNumber++;
@@ -137,4 +147,5 @@ function select(playerChoice) {
   }
 }
 
-
+// Au lancemenet du jeu, on lance la fonction resetAll()
+resetAll();
